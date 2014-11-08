@@ -3,14 +3,36 @@
   <head>
   	<style>
   	  body {
-  	  	min-width: 150px;
+  	  	min-width: 250px;
   	  	overflow-y: scroll;
   	  	overflow-x: hidden;
+  	  	margin: 0px;
+  	  }
+
+  	  #app {
+  	  	height: 100%;
+  	  	width: 100%;
+  	  }
+
+  	  .plus {
+  	  	width: 100%;
+  	  	height : 50px;
+  	  	overflow: auto;
+  		border-bottom: 1px solid #dddddd;
+  		-webkit-box-shadow: 0 3px 3px #eeeeee;
+  		box-shadow: 0 3px 3px #eeeeee;
+  		background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #f8f8f8));
   	  }
   	</style>
   	<script src="popup.js"></script>
   </head>
   <body>
+  	<div id="app">
+  		<div class="" sortby="add_date">
+  			<div class="plus">
+  			</div>
+  		</div>
+  	</div>
   	<h1>Hello World!</h1>
   </body>
 </html>

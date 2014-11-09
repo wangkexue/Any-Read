@@ -89,7 +89,7 @@
         position: relative;
       }
 
-      .checked {
+      .checked a.reading {
           text-decoration: line-through;
       }
 
@@ -117,6 +117,7 @@
   	</style>
   </head>
   <body>
+    <img src='images/loadinfo.net.gif' onload="displayImage(this)" style="display:none;">
   	<div id="app">
   		<div class="header" sortby="add_date">
   			<div class="plus">
@@ -126,7 +127,6 @@
         <ul></ul>
       </div>
   	</div>
-  	<h1>Hello World!</h1>
     <!-- JS -->
     <script src="popup.js"></script>
   </body>

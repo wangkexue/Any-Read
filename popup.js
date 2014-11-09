@@ -1,6 +1,28 @@
 (function(window, document, undefined) {
+	function displayImage(obj) {
+		obj.style.display = "block";
+	}
+
 	var header = document.getElementsByClassName("header")[0];
-	var readList = document.getElementsByTagName("ul")[0];
+	//var readList = document.getElementsByTagName(".readList-wrapper ul")[0];
+	var readList = document.querySelector(".readList-wrapper ul");
+	//var readings = chrome.storage.sync.get('readings');
+// context Menus in experiments
+/*
+	chrome.contextMenus.create({
+		"title": "Any.Read",
+		"onclick": function(e) {
+			addReading();
+		}
+	});
+*/
+	chrome.storage.sync.get(null, function(items) {
+		//console.log(items);
+		// init
+		for (x in items) {
+			addMark(items[x].url, x);
+		}
+	})
 
 	header.addEventListener("click", function(event) {
 		addReading();
@@ -15,18 +37,30 @@
 		//console.log(currentTab.url);
 	}
 
-	function creatMark(url, title) {
+	function addMark(url, title) {
 		var li = document.createElement('li');
-		//li.textContent = title;
-
-		chrome.storage.sync.set({title: url}, function() {
-			//message('Page saved!');
-		});
-
 		li.innerHTML += "<a href=" + url + " target='_blank' class='reading'>" + title + "</a>" + "<a href=\"#\" class=\"delete\">&#215;</a> <a href=\"#\" class=\"check\">&#9744;</a>";
 
 		addReadListeners(li);
 		readList.appendChild(li);
+	}
+
+	function creatMark(url, title) {
+		//li.textContent = title;
+		//console.log(title);
+		var d = new Date();
+		chrome.storage.sync.get(null, function(items) {
+			if (items[title]) {
+				assert("This page is already in list!");
+			}
+			else {
+				items[title] = {'url':url, 'date': d.getTime()};
+				chrome.storage.sync.set(items, function() {
+				//message('Page saved!');
+				});
+				addMark(url, title);		
+			}
+		}); 		
 	}
 
 	function addReadListeners(li) {
@@ -58,20 +92,6 @@
 
 
 /*
-function saveLink() {
-	var url = document.location.toString().toLowerCase();
-	var title = document.title;
-	chrome.storage.sync.set({title: url}, function() {
-		message('Page saved!');
-	});
-}
-
-function deleteLink(key) {
-	chrome.storage.sync.remove(key, function() {
-		
-	});
-}
-
 function addCount() {
 	var readCount = chrome.storage.sync.get("readCount");
 	chrome.storage.sync.set({"readCount": readCount+1});

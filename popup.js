@@ -19,10 +19,10 @@
 	chrome.storage.sync.get(null, function(items) {
 		//console.log(items);
 		// init
-		for (x in items) {
+		for (var x in items) {
 			addMark(items[x].url, x);
 		}
-	})
+	});
 
 	header.addEventListener("click", function(event) {
 		addReading();
